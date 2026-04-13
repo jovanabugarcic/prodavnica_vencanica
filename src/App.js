@@ -1,5 +1,5 @@
 import React from 'react'
-import Heather from './components/Heather'
+import Heather from './components/Header'
 import Footer from './components/Footer'
 import { Container } from 'react-bootstrap'
 import HomeScreen from './screens/HomeScreen'
