@@ -1,20 +1,23 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
-import Header from './components/Header'
+import Heather from './components/Heather'
 import Footer from './components/Footer'
+import { Container } from 'react-bootstrap'
+import HomeScreen from './screens/HomeScreen'
+
+
 
 const App = () => {
   return (
-   <>
-   <Header/>
+    <>
+    <Heather/>
     <main className="py-3">
-      <Container>
-        <h1>Dobrodošli na MyWeddingDress</h1>
-      </Container>
+    <Container>
+      <HomeScreen/>
+    </Container>
     </main>
     <Footer/>
-   </>
-  );
+    </>
+  )
 }
 
-export default App;
+export default App
