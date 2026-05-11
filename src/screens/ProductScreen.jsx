@@ -1,15 +1,23 @@
 import React from "react";
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button, Badge } from 'react-bootstrap'
 import Rating from "../components/Rating";
-import products from "../product_list";
+import axios from 'axios';
 
 const ProductScreen = () => {
-    const { id: productId } = useParams()
-    const product = products.find((p) => p._id === productId);
-    console.log(product);
-    return <>
+    const [product, setProduct] = useState({});
+    const { id: productId } = useParams();
+    
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const { data } = await axios.get(`/api/products/${productId}`);
+            setProduct(data);
+        }
+        fetchProduct();
+    }, [productId]);
+    return (<>
     <Link className="btn btn-outline-secondary mb-4" to="/">Nazad</Link>
     
     <Card className="border-0 shadow-sm p-4 mb-4">
@@ -19,7 +27,7 @@ const ProductScreen = () => {
             <Rating value={product.rating} text={`${product.numReviews} recenzija`}/>
             </Col>
             <Col md={4} className="text-md-end mt-3 mt-md-0">
-            <h3 className="text-primary mb-0">{product.price.toFixed(2)} EUR</h3>
+            <h3 className="text-primary mb-0">{product?.price?.toFixed(2)} RSD</h3>
             </Col>
         </Row>
     </Card>
@@ -39,7 +47,7 @@ const ProductScreen = () => {
         <Col lg={4}>
         <Card className="border-0 shadow-sm">
             <Card.Body>
-                <h4 className="mb-4">Informacije o venčanici</h4>
+                <h4 className="mb-4">Informacije o proizvodu</h4>
                 <div className="d-flex justify-content-between mb-3">
                     <span>Kategorija:</span>
                     {product.category}
@@ -47,9 +55,9 @@ const ProductScreen = () => {
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <span>Status:</span>
                     {product.countInStock > 0 ? (
-                        <Badge bg='success'>Dostupna</Badge>
+                        <Badge bg='success'>Dostupno</Badge>
                     ) : (
-                        <Badge bg='danger'>Nije dostupna</Badge>
+                        <Badge bg='danger'>Nije dostupno</Badge>
                     )}
                 </div>
 
@@ -69,7 +77,7 @@ const ProductScreen = () => {
             <p className="text-muted mb-0">{product.description}</p>
         </Card.Body>
     </Card>
-    </>
+    </>)
 }
 
 export default ProductScreen
